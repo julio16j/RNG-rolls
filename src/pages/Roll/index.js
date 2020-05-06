@@ -2,20 +2,19 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native'
 import { useNavigation, useRoute} from '@react-navigation/native';
 import { Audio } from 'expo-av';
+import Menu from '../../components/Menu';
 import styles from './styles';
+import { getImages } from '../../Service/image'
 export default function Roll()  {
   const navigation = useNavigation();
   const route = useRoute();
   const [images, setImages] = useState([]);
   const [imageSelected, setImageSelected] = useState();
   useEffect(() => {
-    setImages(route.params.listImage);
+    getImages().then( lista => setImages(lista) );
   }, [route.params.listImage])
-  function NavigateToImages(){
-    navigation.navigate('Images');
-  }
-
   async function SelectImage() {
+    console.log(images)
     const soundObject = new Audio.Sound();
     try {
       await soundObject.loadAsync(require('../../../assets/lifePointsSound.mp3'));
@@ -30,19 +29,10 @@ export default function Roll()  {
       clearInterval(id);
     }, 1000);
   }
-
   return (
     <View style={styles.container} >
-      <Text>Roll Page</Text>
-      <TouchableOpacity onPress={NavigateToImages}> 
-        <Text>Nova Imagem</Text> 
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={SelectImage}> 
-        <Text>RollOne</Text> 
-      </TouchableOpacity>
-
-      {imageSelected && <Image source={{ uri: imageSelected }} style={{ width: 200, height: 200 }} />}
+      <Menu  roll={SelectImage} />
+      {imageSelected && <Image source={{ uri: imageSelected.uri }} style={{ width: 300, height: 400, resizeMode: 'cover', backgroundColor: 'black' }} />}
     </View>
   )
 }

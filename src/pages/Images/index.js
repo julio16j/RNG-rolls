@@ -3,37 +3,13 @@ import { Button, Image, View, TouchableOpacity, Text, FlatList } from 'react-nat
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { useNavigation} from '@react-navigation/native';
-import {AsyncStorage} from 'react-native';
-import styles from './styles'
+import { AntDesign } from '@expo/vector-icons';
+import Menu from '../../components/Menu';
+import { createImage, getImages, save } from '../../Service/image';
+import styles from './styles';
 export default function Images() {
   const [listImage, setListImage] = useState([]);
-  const navigation = useNavigation();
-  function NavigateToRoll(){
-    navigation.navigate('Roll', { listImage });
-  }
-  salvarImagem = async (images) => {
-    try { 
-      await AsyncStorage.setItem('images', JSON.stringify(images) );
-    } catch (error) {
-      console.log(error);
-      console.log('erroaqui')
-    }
-  }; 
-  async function getImages () {
-    try {
-      const value = await AsyncStorage.getItem('images');
-      if (value!== undefined && value !== null) {
-        return JSON.parse(value);
-      }
-      else{
-        console.log("nenhuma imagem");
-        return [];
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   const getPermissionAsync = async () => {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -43,44 +19,47 @@ export default function Images() {
     }
   };
 
+  function deleteImage(id) {
+    let lista = listImage.filter( (image) => image.id != id );
+    save(lista);
+    setListImage(lista);
+  }
+
   const _pickImage = async () => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
+        allowsEditing: false,
         aspect: [4, 3],
-        quality: 1,
+        quality: 1
       });
       if (!result.cancelled) {
-        
-        setListImage(listImage.concat(result.uri));
-        console.log(listImage);
-        this.salvarImagem(listImage);
+        let image = await createImage(result.uri);
+        save(listImage.concat(image));
+        setListImage(listImage.concat(image));
       }
     } catch (E) {
       console.log(E);
     }
   };
-  
   useEffect(()  =>  {
     getImages().then(images => setListImage(images));
     getPermissionAsync();
-  }, [])
-  
+  }, []);  
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Button title="Pick an image from camera roll" onPress={_pickImage} />
-        <TouchableOpacity onPress={NavigateToRoll}> 
-          <Text>Get Some Randoms</Text> 
-        </TouchableOpacity>
+    <View style={[styles.container ]}>
+        <Menu listImage={listImage} addImage={_pickImage}  ></Menu>
         <FlatList
         data={listImage}
         keyExtractor={image => String(image.id)}
         showsVerticalScrollIndicator={false}
-        onEndReached={() => console.log('lol')}
-        onEndReachedThreshold={0.2}
         renderItem={({ item: image }) => (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+           <View style={{marginBottom: 10, backgroundColor: '#424242', width: 270, alignItems: 'center'}} >
+             <Image source={{ uri: image.uri }} style={{ width: 200, height: 300, resizeMode: 'cover' }}/>
+             <TouchableOpacity style={{ position: 'absolute', right: 1, top: 10 }} onPress={ () => { deleteImage(image.id) } } >
+              <AntDesign name="delete" size={25} color="#e82041"  />
+             </TouchableOpacity>
+           </View>
         )}
       />
       </View>
