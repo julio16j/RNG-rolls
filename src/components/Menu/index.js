@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import { useNavigation, useRoute} from '@react-navigation/native';
-import styles from './style';
+import styles from './styles';
 export default function Menu(props) {
   const [imageItemStyle, setImageItemStyle] = useState(styles.active);
   const [rollItemStyle, setRollItemStyle] = useState(styles.notSelected);
