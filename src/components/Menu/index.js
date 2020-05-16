@@ -34,7 +34,7 @@ export default function Menu(props) {
   return (
     <View style={styles.container} >
       <View style={styles.viewTitle} >
-        <Text style={styles.textTitle} >RNG Rolls</Text>
+        <Text style={styles.textTitle} >Dungeon Mirror</Text>
       </View>
       <View style={styles.header} >
         <TouchableOpacity onPress={() => mudarPagina('Images')} style={[imageItemStyle, styles.touchItem]} >

@@ -5,7 +5,7 @@ export default StyleSheet.create({
     marginBottom: 20
   },
   active: {
-    borderBottomColor: '#11aa11',
+    borderBottomColor: '#fff',
     borderBottomWidth: 4,
   },
   notSelected: {

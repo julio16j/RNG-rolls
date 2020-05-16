@@ -7,6 +7,6 @@ export default StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: Constants.statusBarHeight + 20,
     alignItems: 'center', 
-    backgroundColor: '#424242'
+    backgroundColor: '#000'
   }
 })

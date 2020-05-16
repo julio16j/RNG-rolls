@@ -4,7 +4,8 @@ import { useNavigation, useRoute} from '@react-navigation/native';
 import { Audio } from 'expo-av';
 import Menu from '../../components/Menu';
 import styles from './styles';
-import { getImages } from '../../Service/image'
+import { getImages } from '../../Service/image';
+import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 export default function Roll()  {
   const navigation = useNavigation();
   const route = useRoute();
@@ -14,7 +15,6 @@ export default function Roll()  {
     getImages().then( lista => setImages(lista) );
   }, [route.params.listImage])
   async function SelectImage() {
-    console.log(images)
     const soundObject = new Audio.Sound();
     try {
       await soundObject.loadAsync(require('../../../assets/lifePointsSound.mp3'));
@@ -32,7 +32,10 @@ export default function Roll()  {
   return (
     <View style={styles.container} >
       <Menu  roll={SelectImage} />
-      {imageSelected && <Image source={{ uri: imageSelected.uri }} style={{ width: 300, height: 400, resizeMode: 'cover', backgroundColor: 'black' }} />}
+      {imageSelected &&
+         <Image style={{ flex: 1, width: 300}}
+                source={{uri: imageSelected.uri}}
+                resizeMode="stretch" />}
     </View>
   )
 }

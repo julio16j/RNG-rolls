@@ -49,7 +49,7 @@ export default class ImageBrowser extends React.Component {
   }
 
   getPhotos = () => {
-    let params = { first: 500 }
+    let params = { first: 500, sortBy: [MediaLibrary.SortBy.creationTime] }
     if (this.state.after) params.after = this.state.after
     if (!this.state.hasNextPage) return
     MediaLibrary
@@ -194,12 +194,13 @@ const styles = StyleSheet.create({
   headerText: {
     fontWeight: 'bold',
     fontSize: 16,
-    lineHeight: 19
+    lineHeight: 19,
+    color: '#bbb'
   },
   emptyContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   emptyText: {
     color: '#bbb',

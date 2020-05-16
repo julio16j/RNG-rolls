@@ -34,8 +34,8 @@ export default function Images() {
         keyExtractor={image => String(image.uri)}
         showsVerticalScrollIndicator={false}
         renderItem={({ item: image }) => (
-           <View style={{marginBottom: 10, backgroundColor: '#424242', width: 270, alignItems: 'center'}} >
-             <Image source={{ uri: image.uri }} style={{ width: 200, height: 300, resizeMode: 'cover' }}/>
+           <View style={{marginBottom: 10, backgroundColor: '#000', width: 270, alignItems: 'center'}} >
+             <Image source={{ uri: image.uri }} style={{ width: 200, height: 300, resizeMode: 'stretch'}}/>
              <TouchableOpacity style={{ position: 'absolute', right: 1, top: 10 }} onPress={ () => { deleteImage(image.uri) } } >
               <AntDesign name="delete" size={25} color="#e82041"  />
              </TouchableOpacity>
