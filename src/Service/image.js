@@ -19,3 +19,11 @@ export async function getImages () {
     console.log(error);
   }
 };
+export function generateId(images){
+  let count = 0;
+  return images.map(elem => {
+    elem.id = count;
+    count++;
+    return elem;
+  })
+}
