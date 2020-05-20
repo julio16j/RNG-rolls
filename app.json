@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Dungeon Mirror",
-    "slug": "DungeonMirror",
+    "name": "Mirror Journey",
+    "slug": "MirrorJourney",
     "platforms": [
       "ios",
       "android"
@@ -22,10 +22,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.julioCesarMobile.DungeonMirror"
+      "bundleIdentifier": "com.julioCesarMobile.MirrorJourney"
     },
     "android":{
-      "package": "com.julioCesarMobile.DungeonMirror",
+      "package": "com.julioCesarMobile.MirrorJourney",
       "adaptiveIcon": {
         "backgroundColor": "#000000"
       }
